@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fardin Edu ID Generator - Custom Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Custom styles for ID card dimensions and a professional look */
+        .id-card-container {
+            width: 3.375in; /* Standard horizontal ID card width */
+            height: 2.125in; /* Standard horizontal ID card height */
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #2F4F4F; /* Deep blue background */
+            color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-image: url('https://i.ibb.co.com/Y40vGbXC/Screenshot-2025-08-24-174255.png'); /* New background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 0.2in;
+        }
+
+        .top-header {
+            position: absolute;
+            top: 0.1in;
+            left: 0.2in;
+            right: 0.2in;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.12in;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .main-content {
+            position: absolute;
+            top: 0.5in;
+            left: 0.2in;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .photo-container {
+            width: 0.8in;
+            height: 0.8in;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #FFD700;
+            margin-right: 0.15in;
+        }
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .details-container {
+            color: #fff;
+        }
+        
+        .college-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.05in;
+        }
+
+        .college-info img {
+            width: 0.25in;
+            height: 0.25in;
+            object-fit: contain;
+            margin-right: 0.05in;
+            border-radius: 50%; /* Make college logo circular */
+            border: 1px solid #fff;
+        }
+
+        .college-info p {
+            font-size: 0.12in;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .details-container p {
+            font-size: 0.11in;
+            line-height: 1.1;
+            margin-bottom: 0.02in;
+        }
+
+        .details-container span.label {
+            font-weight: bold;
+            color: #FFD800;
+        }
+
+        .bottom-section {
+            position: absolute;
+            bottom: 0.15in;
+            left: 0.2in;
+            right: 0.2in;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .student-name {
+            font-size: 0.16in;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+        }
+        
+        .principal-info {
+            text-align: right;
+            font-size: 0.11in;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .principal-info img {
+            width: 1in;
+            height: 0.3in;
+            object-fit: contain;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.7));
+        }
+
+        /* File input button styles */
+        .file-input-button {
+            background-color: #4F46E5;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            transition: background-color 0.2s;
+        }
+        .file-input-button:hover {
+            background-color: #4338CA;
+        }
+    </style>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+<script type="text/javascript" language="javascript">
+    
+    adsbygoogle = window.adsbygoogle || [];
+  if (typeof adsbygoogle.requestNonPersonalizedAds === 'undefined') {
+    adsbygoogle.requestNonPersonalizedAds = 1;
+  }
+</script>
+
+</head>
+<body class="font-sans bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="flex flex-col lg:flex-row bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-6xl">
+        <div class="w-full lg:w-1/2 p-6 md:p-8 space-y-6 border-r border-gray-200">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 text-center">Fardin Edu ID Genarate</h3>
+
+            <div class="space-y-4">
+                <label for="collegeNameInput" class="block text-sm font-medium text-gray-700">College Name:</label>
+                <input type="text" id="collegeNameInput" value="Panjab University, Chandigarh" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="space-y-4">
+                <label for="idInput" class="block text-sm font-medium text-gray-700">ID Number:</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="idInput" value="21BC5229" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <button id="randomIdBtn" class="px-3 py-2 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-600 transition-colors">Random</button>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label for="studentEmailInput" class="block text-sm font-medium text-gray-700">Student Email:</label>
+                <div class="flex space-x-2">
+                    <input type="email" id="studentEmailInput" value="21bc5229@cuchd.in" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm" readonly>
+                    <button id="copyEmailBtn" class="px-3 py-2 bg-green-500 text-white text-sm rounded-md hover:bg-green-600 transition-colors">Copy</button>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label for="mobileInput" class="block text-sm font-medium text-gray-700">Mobile:</label>
+                <div class="flex space-x-2">
+                    <input type="tel" id="mobileInput" value="7685213548" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <button id="randomMobileBtn" class="px-3 py-2 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-600 transition-colors">Random</button>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label for="classInput" class="block text-sm font-medium text-gray-700">Class:</label>
+                <input type="text" id="classInput" value="CSC" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="space-y-4">
+                <label for="dobInput" class="block text-sm font-medium text-gray-700">Date Of Birth:</label>
+                <input type="date" id="dobInput" value="2003-12-12" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="space-y-4">
+                <label for="addressInput" class="block text-sm font-medium text-gray-700">Address:</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="addressInput" value="At- Sadanandpur Dist- Supaul, Bihar" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <button id="randomAddressBtn" class="px-3 py-2 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-600 transition-colors">Random</button>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label for="issueDateInput" class="block text-sm font-medium text-gray-700">Issue On:</label>
+                <input type="text" id="issueDateInput" value="JULY 2025" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="space-y-4">
+                <label for="websiteInput" class="block text-sm font-medium text-gray-700">Website:</label>
+                <input type="text" id="websiteInput" value="Web.www.nic.in" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="space-y-4">
+                <label for="nameInput" class="block text-sm font-medium text-gray-700">Student Name:</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="nameInput" value="Fuldev kumar" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <button id="randomNameBtn" class="px-3 py-2 bg-indigo-500 text-white text-sm rounded-md hover:bg-indigo-600 transition-colors">Random Name</button>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Student Photo</label>
+                <div class="flex space-x-2">
+                    <button id="randomPhotoBtn" class="px-3 py-2 bg-purple-500 text-white text-sm rounded-md hover:bg-purple-600 transition-colors">Random Photo</button>
+                    <label for="studentPhotoUpload" class="file-input-button">Choose File</label>
+                    <input type="file" id="studentPhotoUpload" accept="image/*" class="hidden">
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">College Logo</label>
+                <div class="flex space-x-2">
+                    <button id="randomLogoBtn" class="px-3 py-2 bg-purple-500 text-white text-sm rounded-md hover:bg-purple-600 transition-colors">Random Logo</button>
+                    <label for="collegeLogoUpload" class="file-input-button">Choose File</label>
+                    <input type="file" id="collegeLogoUpload" accept="image/*" class="hidden">
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Principal Signature</label>
+                <div class="flex space-x-2">
+                    <button id="randomSignatureBtn" class="px-3 py-2 bg-purple-500 text-white text-sm rounded-md hover:bg-purple-600 transition-colors">Random Signature</button>
+                    <label for="principalSignatureUpload" class="file-input-button">Choose File</label>
+                    <input type="file" id="principalSignatureUpload" accept="image/*" class="hidden">
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-1/2 p-6 md:p-8 flex flex-col items-center justify-center bg-gray-50 relative">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Live ID Card Preview</h2>
+            
+            <div id="idCardPreview" class="id-card-container">
+                <div class="top-header">
+                    <p>Issue On <span id="cardIssueDate">JULY 2025</span></p>
+                    <p id="cardWebsite">Web.www.nic.in</p>
+                </div>
+
+                <div class="main-content">
+                    <div class="photo-container">
+                        <img id="cardStudentPhoto" src="https://i.ibb.co.com/hTQShSn/photo-2025-07-23-23-01-08.jpg" alt="Student Photo">
+                    </div>
+                    <div class="details-container">
+                        <div class="college-info">
+                            <img id="cardLogo" src="https://i.ibb.co.com/GvTwszKZ/photo-2025-08-24-12-43-09.jpg" alt="College Logo">
+                            <p id="cardCollegeName">Punjab University, Chandigarh</p>
+                        </div>
+                        <p><span class="label">ID</span>: <span id="cardID">21BC5229</span></p>
+                        <p><span class="label">Mobile</span>: <span id="cardMobile">7685213548</span></p>
+                        <p><span class="label">Class</span>: <span id="cardClass">CSC</span></p>
+                        <p><span class="label">D.O.B</span>: <span id="cardDOB">12-12-2003</span></p>
+                        <p><span class="label">Address</span>: <span id="cardAddress">At- Sadanandpur Dist- Supaul, Bihar</span></p>
+                    </div>
+                </div>
+
+                <div class="bottom-section">
+                    <p class="student-name" id="cardName">Fuldev kumar</p>
+                    <div class="principal-info">
+                        <p>Principal</p>
+                        <div class="principal-signature">
+                            <img id="cardPrincipalSignature" src="https://i.ibb.co.com/M6Lg5tN/dummy-sign.png" alt="Principal Signature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="downloadCardButton" class="mt-8 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-200">
+                Download Card
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Predefined data for randomization
+        const randomIDs = ['21BC5229', '22FG8765', '23HI1234', '24JK9876'];
+        const randomMobiles = ['7685213548', '9876543210', '8765432109', '9988776655'];
+        const randomAddresses = [
+            'At- Sadanandpur Dist- Supaul, Bihar',
+            '123 Main St, Anytown, USA',
+            '456 College Rd, Cityville, State',
+            '789 Academic Ave, Metropoli, Country'
+        ];
+        const randomPhotos = [
+            'https://i.ibb.co.com/8Fk7tG4/dummy-student.jpg',
+            'https://i.ibb.co.com/9HnK6Dfm/photo-2025-07-23-23-01-11.jpg',
+            'https://i.ibb.co.com/hTQShSn/photo-2025-07-23-23-01-08.jpg'
+        ];
+        const randomLogos = [
+            'https://i.ibb.co.com/1G0wV1Z/dummy-logo.png',
+            'https://i.ibb.co.com/Z3WqTcm/photo-2025-08-24-12-43-13.jpg',
+            'https://i.ibb.co.com/GvTwszKZ/photo-2025-08-24-12-43-09.jpg'
+        ];
+        const randomSignatures = [
+            'https://i.ibb.co.com/M6Lg5tN/dummy-sign.png',
+            'https://i.ibb.co.com/s914F7m5/Signature-PNG-Image-HD.png'
+        ];
+        
+        // Random Name Generation
+        const indianMaleNames = [
+            'Rohan Sharma',
+            'Siddharth Patel',
+            'Aditya Singh',
+            'Arjun Gupta',
+            'Dhruv Kumar',
+            'Kabir Khan',
+            'Aryan Verma',
+            'Vihaan Jain',
+            'Ishaan Reddy',
+            'Dev Joshi',
+            'Krishnan Iyer',
+            'Neel Mehta',
+            'Aarav Das',
+            'Vivaan Singh',
+            'Reyansh Chaudhary',
+            'Samar Arora',
+            'Yash Yadav',
+            'Kunal Desai',
+            'Anand Sharma',
+            'Gautam Mishra',
+            'Pranav Sen',
+            'Rahul Biswas',
+            'Abhishek Roy',
+            'Ankit Sharma',
+            'Manav Choudhury'
+        ];
+
+        function getRandomIndianName() {
+            const randomIndex = Math.floor(Math.random() * indianMaleNames.length);
+            return indianMaleNames[randomIndex];
+        }
+
+        // Utility function to update text content
+        function updateCardText(inputId, cardElementId, isDate = false) {
+            const inputElement = document.getElementById(inputId);
+            const cardElement = document.getElementById(cardElementId);
+            
+            const update = () => {
+                if (isDate) {
+                    const date = new Date(inputElement.value);
+                    cardElement.textContent = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                } else {
+                    cardElement.textContent = inputElement.value;
+                }
+            };
+            update();
+            inputElement.addEventListener('input', update);
+        }
+
+        // Utility function to handle image uploads and randomization
+        function handleImage(type) {
+            const elementId = type === 'photo' ? 'cardStudentPhoto' : type === 'logo' ? 'cardLogo' : 'cardPrincipalSignature';
+            const randomList = type === 'photo' ? randomPhotos : type === 'logo' ? randomLogos : randomSignatures;
+            const imgElement = document.getElementById(elementId);
+            const randomIndex = Math.floor(Math.random() * randomList.length);
+            imgElement.src = randomList[randomIndex];
+        }
+
+        function handleFile(event, targetElementId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetElementId).src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Function to create and update email
+        function updateStudentEmail() {
+            const idInput = document.getElementById('idInput');
+            const studentEmailInput = document.getElementById('studentEmailInput');
+            const studentId = idInput.value.toLowerCase().replace(/[^a-z0-9]/g, '');
+            studentEmailInput.value = studentId + '@cuchd.in';
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update all text fields
+            updateCardText('collegeNameInput', 'cardCollegeName');
+            updateCardText('idInput', 'cardID');
+            updateCardText('mobileInput', 'cardMobile');
+            updateCardText('classInput', 'cardClass');
+            updateCardText('dobInput', 'cardDOB', true);
+            updateCardText('addressInput', 'cardAddress');
+            updateCardText('issueDateInput', 'cardIssueDate');
+            updateCardText('websiteInput', 'cardWebsite');
+            updateCardText('nameInput', 'cardName');
+
+            // Initial email update based on default ID
+            updateStudentEmail();
+            document.getElementById('idInput').addEventListener('input', updateStudentEmail);
+
+            // Event listeners for random buttons
+            document.getElementById('randomIdBtn').addEventListener('click', () => {
+                const randomId = randomIDs[Math.floor(Math.random() * randomIDs.length)];
+                document.getElementById('idInput').value = randomId;
+                document.getElementById('idInput').dispatchEvent(new Event('input'));
+            });
+            document.getElementById('randomMobileBtn').addEventListener('click', () => {
+                const randomMobile = randomMobiles[Math.floor(Math.random() * randomMobiles.length)];
+                document.getElementById('mobileInput').value = randomMobile;
+                document.getElementById('mobileInput').dispatchEvent(new Event('input'));
+            });
+            document.getElementById('randomAddressBtn').addEventListener('click', () => {
+                const randomAddress = randomAddresses[Math.floor(Math.random() * randomAddresses.length)];
+                document.getElementById('addressInput').value = randomAddress;
+                document.getElementById('addressInput').dispatchEvent(new Event('input'));
+            });
+            document.getElementById('randomLogoBtn').addEventListener('click', () => handleImage('logo'));
+            document.getElementById('randomPhotoBtn').addEventListener('click', () => handleImage('photo'));
+            document.getElementById('randomSignatureBtn').addEventListener('click', () => handleImage('signature'));
+            document.getElementById('randomNameBtn').addEventListener('click', () => {
+                const nameInput = document.getElementById('nameInput');
+                nameInput.value = getRandomIndianName();
+                nameInput.dispatchEvent(new Event('input'));
+            });
+
+            // Copy Email Button
+            document.getElementById('copyEmailBtn').addEventListener('click', () => {
+                const studentEmailInput = document.getElementById('studentEmailInput');
+                studentEmailInput.select();
+                studentEmailInput.setSelectionRange(0, 99999);
+                document.execCommand('copy');
+                alert('Email copied to clipboard!');
+            });
+
+            // Event listeners for file upload
+            document.getElementById('collegeLogoUpload').addEventListener('change', (e) => handleFile(e, 'cardLogo'));
+            document.getElementById('studentPhotoUpload').addEventListener('change', (e) => handleFile(e, 'cardStudentPhoto'));
+            document.getElementById('principalSignatureUpload').addEventListener('change', (e) => handleFile(e, 'cardPrincipalSignature'));
+
+            // Download functionality
+            document.getElementById('downloadCardButton').addEventListener('click', async () => {
+                const card = document.getElementById('idCardPreview');
+                const scaleFactor = 4;
+
+                try {
+                    const canvas = await html2canvas(card, {
+                        scale: scaleFactor,
+                        useCORS: true,
+                        logging: false,
+                        width: card.offsetWidth,
+                        height: card.offsetHeight
+                    });
+
+                    // PNG Download
+                    const pngUrl = canvas.toDataURL('image/png');
+                    const pngLink = document.createElement('a');
+                    pngLink.href = pngUrl;
+                    pngLink.download = 'student_id_card.png';
+                    document.body.appendChild(pngLink);
+                    pngLink.click();
+                    document.body.removeChild(pngLink);
+
+                    // PDF Download
+                    const { jsPDF } = window.jspdf;
+                    const pdfWidth = 86;
+                    const pdfHeight = 54;
+                    const pdf = new jsPDF({
+                        orientation: 'landscape',
+                        unit: 'mm',
+                        format: [pdfWidth, pdfHeight]
+                    });
+                    const imgData = canvas.toDataURL('image/png');
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    pdf.save('student_id_card.pdf');
+                } catch (error) {
+                    console.error("Error generating card:", error);
+                }
+            });
+        });
+    </script>
+
+
+<!-- 'Il est de votre ressort d\x27informer les visiteurs à propos des cookies utilisés et des données collectées sur votre blog. Blogger met à votre disposition une notification standard que vous pouvez personnaliser, remplacer ou afficher telle quelle sur votre blog. Rendez-vous sur http://www.blogger.com/go/cookiechoices pour obtenir de plus amples informations.' -->
+<script src="/js/cookienotice.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'Ce site utilise des cookies provenant de Google pour fournir ses services et analyser le trafic. Votre adresse IP et votre user-agent, ainsi que des statistiques relatives aux performances et à la sécurité, sont transmis à Google afin d\x27assurer un service de qualité, de générer des statistiques d\x27utilisation, et de détecter et de résoudre les problèmes d\x27abus.',
+        (window.cookieOptions && cookieOptions.close) || 'OK !',
+        (window.cookieOptions && cookieOptions.learn) || 'En savoir plus',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
+</body><script type='text/javascript' src='//pl26880692.revenuecpmgate.com/39/77/24/397724023612c04e54e65860b9943c10.js'></script>
+<div id="container-8647f30d28669414fe5c55472021762b"></div>
+</html>
